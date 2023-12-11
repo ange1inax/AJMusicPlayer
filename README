@@ -1,0 +1,26 @@
+This is a simple music player app built using SwiftUI and AVKit. The app allows users to play music tracks, control playback, and view album art.
+
+## Overview
+
+This project aims to create a simple and visually appealing music player using Swift UI. The app includes dual music player interfaces for Angelina and Jane, each featuring basic playback controls, album art, and song titles.
+
+## Getting Started
+
+### Prerequisites
+
+- Xcode installed on your device
+
+## Usage
+
+- Launch the app, and you will be presented with a tab view featuring music players for both Angelina and Jane.
+- Navigate between tabs to access the respective music player interfaces.
+- Utilize the playback controls to manage song playback.
+- Observe the album art and song title for each track.
+
+## Features
+
+- Dual music player interfaces for different users.
+- Intuitive playback controls (play, pause, skip, rewind).
+- Visual appeal with album art and song title display.
+- Progress tracking with a built-in progress bar.
+
