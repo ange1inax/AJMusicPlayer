@@ -8,6 +8,8 @@
 import UIKit
 
 @UIApplicationMain
+
+// Class contains Application Methods.
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
