@@ -11,6 +11,7 @@ import AVKit
 
 
 struct ContentView: View {
+            // TabView with two MusicPlayer views for Angelina and Jane
     var body: some View {
         TabView {
             MusicPlayer1().tabItem {
@@ -33,6 +34,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+// MusicPlayer1 view for Angelina
 
 struct MusicPlayer1: View {
     @State var data: Data = .init(count: 0)
@@ -47,13 +49,16 @@ struct MusicPlayer1: View {
 
     var body: some View {
         VStack(spacing: 20) {
+                        // Display album artwork or placeholder image
             Image(uiImage: self.data.count == 0 ? UIImage(named: "bibble")! : UIImage(data: self.data)!)
                 .resizable()
                 .frame(width: self.data.count == 0 ? 250 : nil, height: 250)
                 .cornerRadius(15)
-
+        
+            // Display the song title
             Text(self.title).font(.title).padding(.top)
-
+            
+            // Progress bar for tracking playback time
             ZStack(alignment: .leading) {
                 Capsule().fill(Color.black.opacity(0.08)).frame(height: 8)
 
@@ -72,7 +77,8 @@ struct MusicPlayer1: View {
                     )
             }
             .padding(.top)
-
+            
+            // Playback controls (backward, rewind, play/pause, fast forward, forward)
             HStack(spacing: UIScreen.main.bounds.width / 5 - 30) {
                 Button(action: {
                     if self.current > 0 {
@@ -129,11 +135,13 @@ struct MusicPlayer1: View {
         }
         .padding()
         .onAppear {
+                        // Initialize audio player and setup when the view appears
             let url = Bundle.main.path(forResource: self.songs[self.current], ofType: "mp3")
             self.player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
             self.player.delegate = self.del
             self.player.prepareToPlay()
             self.getData()
+            // Update progress bar while playing
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
                 if self.player.isPlaying {
                     let screen = UIScreen.main.bounds.width - 30
@@ -145,6 +153,8 @@ struct MusicPlayer1: View {
                 self.finish = true
             }
         }
+                    // Pause the player when the view disappears
+        // this make sure that Angelina's music isn't playing when the TabView is on Jane's page.
         .onDisappear {
             if self.player.isPlaying {
                 self.player.pause()
@@ -182,6 +192,7 @@ struct MusicPlayer1: View {
     }
 }
 
+// MusicPlayer view for Jane
 struct MusicPlayer: View {
     @State var data: Data = .init(count: 0)
     @State var title = ""
@@ -195,13 +206,16 @@ struct MusicPlayer: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(uiImage: self.data.count == 0 ? UIImage(named: "Image")! : UIImage(data: self.data)!)
+                        // Display album artwork or placeholder image
+            Image(uiImage: self.data.count == 0 ? UIImage(named: "bibble")! : UIImage(data: self.data)!)
                 .resizable()
                 .frame(width: self.data.count == 0 ? 250 : nil, height: 250)
                 .cornerRadius(15)
-
+        
+            // Display the song title
             Text(self.title).font(.title).padding(.top)
-
+            
+            // Progress bar for tracking playback time
             ZStack(alignment: .leading) {
                 Capsule().fill(Color.black.opacity(0.08)).frame(height: 8)
 
@@ -220,7 +234,8 @@ struct MusicPlayer: View {
                     )
             }
             .padding(.top)
-
+            
+            // Playback controls (backward, rewind, play/pause, fast forward, forward)
             HStack(spacing: UIScreen.main.bounds.width / 5 - 30) {
                 Button(action: {
                     if self.current > 0 {
@@ -277,11 +292,13 @@ struct MusicPlayer: View {
         }
         .padding()
         .onAppear {
+                        // Initialize audio player and setup when the view appears
             let url = Bundle.main.path(forResource: self.songs[self.current], ofType: "mp3")
             self.player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
             self.player.delegate = self.del
             self.player.prepareToPlay()
             self.getData()
+            // Update progress bar while playing
             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
                 if self.player.isPlaying {
                     let screen = UIScreen.main.bounds.width - 30
@@ -293,6 +310,8 @@ struct MusicPlayer: View {
                 self.finish = true
             }
         }
+                    // Pause the player when the view disappears
+        // this make sure that Jane's music isn't playing when the TabView is on Angelina's page.
         .onDisappear {
             if self.player.isPlaying {
                 self.player.pause()
@@ -330,6 +349,8 @@ struct MusicPlayer: View {
     }
 }
 
+// `AVdelegate` is a custom delegate class that conforms to the `AVAudioPlayerDelegate` protocol.
+/// It is designed to handle notifications related to the playback status of an `AVAudioPlayer` instance.
 class AVdelegate: NSObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         NotificationCenter.default.post(name: NSNotification.Name("Finish"), object: nil)
