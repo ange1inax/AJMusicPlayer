@@ -8,11 +8,12 @@
 import UIKit
 import SwiftUI
 
+// Class contains Scene Methods.
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+// Function sets up the main content view when the scene is created.
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let contentView = ContentView()
